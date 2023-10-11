@@ -11,6 +11,7 @@ struct ContentView: View {
     
     @State var leftDiceNumber = 1
     @State var rightDiceNumber = 1
+    @State var isButtonPressed = false
     
     var body: some View {
         ZStack{
@@ -25,8 +26,17 @@ struct ContentView: View {
                 }
                 Spacer()
                 Button(action: {
-                    leftDiceNumber = Int.random(in: 1...6)
-                    rightDiceNumber = Int.random(in: 1...6)
+                    isButtonPressed = true
+                    withAnimation {
+                        leftDiceNumber = Int.random(in: 1...6)
+                        rightDiceNumber = Int.random(in: 1...6)
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                            withAnimation {
+                                                isButtonPressed = false
+                                            }
+                                        }
+                    
                 }) {
                     Text("Roll")
                         .font(.system(size: 40))
@@ -49,7 +59,11 @@ struct DiceView: View {
             .aspectRatio(1, contentMode: .fit)
             .cornerRadius(40)
             .padding()
-            .animation(.spring())
+            .rotation3DEffect(
+                            .degrees(Double(n) * 180),
+                            axis: (x: 0.0, y: 1.0, z: 0.0)
+                        )
+                        .animation(.easeInOut(duration: 0.5), value: n)
     }
 }
 
