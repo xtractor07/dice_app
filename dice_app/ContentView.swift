@@ -49,6 +49,7 @@ struct DiceView: View {
             .aspectRatio(1, contentMode: .fit)
             .cornerRadius(40)
             .padding()
+            .animation(.spring())
     }
 }
 
