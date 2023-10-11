@@ -47,6 +47,7 @@ struct DiceView: View {
         Image("dice\(n)")
             .resizable()
             .aspectRatio(1, contentMode: .fit)
+            .cornerRadius(40)
             .padding()
     }
 }
